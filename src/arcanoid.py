@@ -29,25 +29,48 @@ def load_image(filename, transparent=False):
         print("Cannot load image: " + filename)
         raise SystemExit(message)    
     return image.convert_alpha()
+
+class Pala(pygame.sprite.Sprite):
+    def __init__(self, x):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = load_image("images/pala.png")
+        self.image=pygame.transform.rotate(self.image, 90)
+        self.rect = self.image.get_rect()
+        self.rect.centerx = x
+        self.rect.centerx = WIDTH / 2
+        self.rect.centery = HEIGHT / 1.1
+        self.speed = 0.5
+ 
+    def mover(self, time, keys):
+        if self.rect.top >= 0:
+            if keys[K_UP]:
+                self.rect.centery -= self.speed * time
+        if self.rect.bottom <= HEIGHT:
+            if keys[K_DOWN]:
+                self.rect.centery += self.speed * time
  
 def main():
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
-    pygame.display.set_caption("Pruebas Pygame")
+    pygame.display.set_caption("Arcanoid")
  
     background_image = load_image('images/fondo.jpg')
     bola = Bola()
+    pala_jug = Pala(30)
  
     clock = pygame.time.Clock()
  
     while True:
         time = clock.tick(60)
+        keys = pygame.key.get_pressed()
         for eventos in pygame.event.get():
             if eventos.type == QUIT:
                 sys.exit(0)
  
         bola.actualizar(time)
+        pala_jug.mover(time, keys)
         screen.blit(background_image, (0, 0))
         screen.blit(bola.image, bola.rect)
+        screen.blit(pala_jug.image, pala_jug.rect)
         pygame.display.flip()
     return 0
  

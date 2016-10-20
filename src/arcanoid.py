@@ -1,8 +1,7 @@
 import sys, pygame
 from pygame.locals import *
-from pygame.examples.mask import Sprite
-from test.script_helper import kill_python
-
+from string import punctuation
+import time
 WIDTH = 640
 HEIGHT = 480
 class Bola(pygame.sprite.Sprite):
@@ -14,22 +13,28 @@ class Bola(pygame.sprite.Sprite):
         self.rect.centery = HEIGHT / 1.2
         self.speed = [0.5, -0.5]
         
-    def actualizar(self,time, pala_jug, ovni1,ovni2,ovni3,ovni4,ovni5,ovni6,ovni7,ovni8,ovni9,ovni10,ovni11,ovni12,ovni13,ovni14,ovni15):
+    def actualizar(self,time, pala_jug, ovni1,ovni2,ovni3,ovni4,ovni5,ovni6,ovni7,ovni8,ovni9,ovni10,ovni11,ovni12,ovni13,ovni14,ovni15,punto):
         self.rect.centerx += self.speed[0] * time
         self.rect.centery += self.speed[1] * time
+        
+        if self.rect.bottom >= 470:
+            self.speed[1] = -self.speed[1]
+            self.rect.centery += self.speed[1] * time
+            punto = punto-1
+            if punto==0:
+                print('Game Over, Para volver a jugar, arranca de nuevo el juego')
+                sys.exit(0)
+        
         if self.rect.left <= 10 or self.rect.right >= 490:
             self.speed[0] = -self.speed[0]
             self.rect.centerx += self.speed[0] * time
-        if self.rect.top <= 10 or self.rect.bottom >= 470:
+        if self.rect.top <= 10:
             self.speed[1] = -self.speed[1]
             self.rect.centery += self.speed[1] * time
             
         if pygame.sprite.collide_rect(self, pala_jug):
             self.speed[1] = -self.speed[1]
             self.rect.centerx += -self.speed[0] * time
-            
-            
-            
             
             
         if pygame.sprite.collide_rect(self, ovni1):
@@ -107,6 +112,7 @@ class Bola(pygame.sprite.Sprite):
             self.speed[1] = -self.speed[1]
             self.rect.centerx += -self.speed[0] * time
             ovni15.move(1000,1000)
+        return punto
 def load_image(filename, transparent=False):  
     try:
         image = pygame.image.load(filename)    
@@ -145,6 +151,14 @@ class Pala(pygame.sprite.Sprite):
         if self.rect.right <= 488:
             if keys[K_RIGHT]:
                 self.rect.centerx += self.speed * time
+                
+def texto(texto, posx, posy, color=(255, 0, 0)):
+    fuente = pygame.font.Font('images/DroidSans.ttf', 25)
+    salida = pygame.font.Font.render(fuente, texto, 1, color)
+    salida_rect = salida.get_rect()
+    salida_rect.centerx = posx
+    salida_rect.centery = posy
+    return salida, salida_rect
  
 def main():
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -175,6 +189,8 @@ def main():
     ovni15 = ovnis(1.45,6)
     
     clock = pygame.time.Clock()
+    global punto
+    punto = 3
     pygame.mixer.music.load("images/arcanoid.mp3")
     pygame.mixer.music.play(10000)
  
@@ -185,8 +201,9 @@ def main():
             if eventos.type == QUIT:
                 sys.exit(0)
  
-        bola.actualizar(time, pala_jug, ovni1,ovni2,ovni3,ovni4,ovni5,ovni6,ovni7,ovni8,ovni9,ovni10,ovni11,ovni12,ovni13,ovni14,ovni15)
+        punto=bola.actualizar(time, pala_jug, ovni1,ovni2,ovni3,ovni4,ovni5,ovni6,ovni7,ovni8,ovni9,ovni10,ovni11,ovni12,ovni13,ovni14,ovni15,punto)
         pala_jug.mover(time, keys)
+        
         screen.blit(background_image, (0, 0))
         screen.blit(bola.image, bola.rect)
         screen.blit(ovni1.image, ovni1.rect)
@@ -205,6 +222,9 @@ def main():
         screen.blit(ovni14.image, ovni14.rect)
         screen.blit(ovni15.image, ovni15.rect)
         screen.blit(pala_jug.image, pala_jug.rect)
+        p_jug, p_jug_rect = texto('vidas: '+str(punto), WIDTH/1.15, 60)
+        screen.blit(p_jug, p_jug_rect)
+        
         pygame.display.flip()
 
     return 0

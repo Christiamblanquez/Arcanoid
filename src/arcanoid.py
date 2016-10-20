@@ -35,64 +35,78 @@ class Bola(pygame.sprite.Sprite):
         if pygame.sprite.collide_rect(self, ovni1):
             self.speed[1] = -self.speed[1]
             self.rect.centerx += -self.speed[0] * time
+            ovni1.move(10000,10000)
             
                         
         if pygame.sprite.collide_rect(self, ovni2):
             self.speed[1] = -self.speed[1]
             self.rect.centerx += -self.speed[0] * time
+            ovni2.move(1000,1000)
             
         if pygame.sprite.collide_rect(self, ovni3):
             self.speed[1] = -self.speed[1]
             self.rect.centerx += -self.speed[0] * time
+            ovni3.move(1000,1000)
 
         if pygame.sprite.collide_rect(self, ovni4):
             self.speed[1] = -self.speed[1]
             self.rect.centerx += -self.speed[0] * time
+            ovni4.move(1000,1000)
             
         if pygame.sprite.collide_rect(self, ovni5):
             self.speed[1] = -self.speed[1]
             self.rect.centerx += -self.speed[0] * time
+            ovni5.move(1000,1000)
             
         if pygame.sprite.collide_rect(self, ovni6):
             self.speed[1] = -self.speed[1]
             self.rect.centerx += -self.speed[0] * time
+            ovni6.move(1000,1000)
             
         if pygame.sprite.collide_rect(self, ovni7):
             self.speed[1] = -self.speed[1]
             self.rect.centerx += -self.speed[0] * time
+            ovni7.move(1000,1000)
             
         if pygame.sprite.collide_rect(self, ovni8):
             self.speed[1] = -self.speed[1]
             self.rect.centerx += -self.speed[0] * time
+            ovni8.move(1000,1000)
 
         if pygame.sprite.collide_rect(self, ovni9):
             self.speed[1] = -self.speed[1]
             self.rect.centerx += -self.speed[0] * time
+            ovni9.move(1000,1000)
             
         if pygame.sprite.collide_rect(self, ovni10):
             self.speed[1] = -self.speed[1]
             self.rect.centerx += -self.speed[0] * time
+            ovni10.move(1000,1000)
         
         if pygame.sprite.collide_rect(self, ovni11):
             self.speed[1] = -self.speed[1]
             self.rect.centerx += -self.speed[0] * time
+            ovni11.move(1000,1000)
             
         if pygame.sprite.collide_rect(self, ovni12):
             self.speed[1] = -self.speed[1]
             self.rect.centerx += -self.speed[0] * time
+            ovni12.move(1000,1000)
             
         if pygame.sprite.collide_rect(self, ovni13):
             self.speed[1] = -self.speed[1]
             self.rect.centerx += -self.speed[0] * time
+            ovni13.move(1000,1000)
 
         if pygame.sprite.collide_rect(self, ovni14):
             self.speed[1] = -self.speed[1]
             self.rect.centerx += -self.speed[0] * time
+            ovni14.move(1000,1000)
             
         if pygame.sprite.collide_rect(self, ovni15):
             self.speed[1] = -self.speed[1]
             self.rect.centerx += -self.speed[0] * time
-            
+            ovni15.move(1000,1000)
 def load_image(filename, transparent=False):  
     try:
         image = pygame.image.load(filename)    
@@ -109,8 +123,10 @@ class ovnis(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.centerx = WIDTH / x
         self.rect.centery = HEIGHT / y
-    def borrar(self):
-        self.kill()
+        
+    def move(self, x, y):
+        self.rect.centerx = x
+        self.rect.centery = y
 
 class Pala(pygame.sprite.Sprite):
     def __init__(self, x,y):
@@ -159,6 +175,8 @@ def main():
     ovni15 = ovnis(1.45,6)
     
     clock = pygame.time.Clock()
+    pygame.mixer.music.load("images/arcanoid.mp3")
+    pygame.mixer.music.play(10000)
  
     while True:
         time = clock.tick(60)
@@ -188,8 +206,11 @@ def main():
         screen.blit(ovni15.image, ovni15.rect)
         screen.blit(pala_jug.image, pala_jug.rect)
         pygame.display.flip()
+
     return 0
  
 if __name__ == '__main__':
     pygame.init()
+    sonido = pygame.mixer.Sound("images/arcanoid.mp3")
+    sonido.play()
     main()

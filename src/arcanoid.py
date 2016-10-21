@@ -7,6 +7,7 @@ HEIGHT = 480
 def Ganar(self):
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Arcanoid")
+    pygame.display.set_icon(pygame.image.load('images/ball.png'))
  
     background_image = load_image('images/win.png')
     sonido = pygame.mixer.Sound("images/gameover.mp3")
@@ -30,6 +31,7 @@ def Ganar(self):
 def gameover(self):
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Arcanoid")
+    pygame.display.set_icon(pygame.image.load('images/ball.png'))
  
     background_image = load_image('images/gameover.jpg')
     sonido = pygame.mixer.Sound("images/gameover.mp3")
@@ -259,6 +261,7 @@ def main():
     pygame.display.set_caption("Arcanoid")
  
     background_image = load_image('images/fondo.png')
+    pygame.display.set_icon(pygame.image.load('images/ball.png'))
     bola = Bola()
     pala_jug = Pala(2.7,1.1)
     

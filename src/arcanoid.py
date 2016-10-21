@@ -4,14 +4,62 @@ from string import punctuation
 import time
 WIDTH = 640
 HEIGHT = 480
+def Ganar(self):
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    pygame.display.set_caption("Arcanoid")
+ 
+    background_image = load_image('images/win.png')
+    sonido = pygame.mixer.Sound("images/gameover.mp3")
+    sonido.play()
+
+    while True:
+        for eventos in pygame.event.get():
+            if eventos.type == QUIT:
+                sys.exit(0)
+ 
+        screen.blit(background_image, (0, 0))
+        p_jug, p_jug_rect = texto('Has ganado para volver a jugar presiona enter', WIDTH/2, HEIGHT/1.1)
+        keys = pygame.key.get_pressed()
+        if keys[K_KP_ENTER]:
+            pygame.init()
+            main()
+        screen.blit(p_jug, p_jug_rect)
+        pygame.display.flip()
+    pygame.init()
+    main()
+def gameover(self):
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    pygame.display.set_caption("Arcanoid")
+ 
+    background_image = load_image('images/gameover.jpg')
+    sonido = pygame.mixer.Sound("images/gameover.mp3")
+    sonido.play()
+
+    while True:
+        for eventos in pygame.event.get():
+            if eventos.type == QUIT:
+                sys.exit(0)
+ 
+        screen.blit(background_image, (0, 0))
+        p_jug, p_jug_rect = texto('Para volver a jugar Porfavor presiona enter', WIDTH/2, HEIGHT/1.1)
+        keys = pygame.key.get_pressed()
+        if keys[K_KP_ENTER]:
+            pygame.init()
+            main()
+        screen.blit(p_jug, p_jug_rect)
+        pygame.display.flip()
+    pygame.init()
+    main()
+    
 class Bola(pygame.sprite.Sprite):
+    suma=0
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.image = load_image("images/ball.png", True)
         self.rect = self.image.get_rect()
         self.rect.centerx = WIDTH / 2
         self.rect.centery = HEIGHT / 1.2
-        self.speed = [0.5, -0.5]
+        self.speed = [0.3, -0.3]
         
     def actualizar(self,time, pala_jug, ovni1,ovni2,ovni3,ovni4,ovni5,ovni6,ovni7,ovni8,ovni9,ovni10,ovni11,ovni12,ovni13,ovni14,ovni15,punto):
         self.rect.centerx += self.speed[0] * time
@@ -22,8 +70,10 @@ class Bola(pygame.sprite.Sprite):
             self.rect.centery += self.speed[1] * time
             punto = punto-1
             if punto==0:
-                print('Game Over, Para volver a jugar, arranca de nuevo el juego')
-                sys.exit(0)
+                pygame.mixer.music.stop()
+                gameover(self)
+
+                
         
         if self.rect.left <= 10 or self.rect.right >= 490:
             self.speed[0] = -self.speed[0]
@@ -41,77 +91,121 @@ class Bola(pygame.sprite.Sprite):
             self.speed[1] = -self.speed[1]
             self.rect.centerx += -self.speed[0] * time
             ovni1.move(10000,10000)
-            
+            self.suma=self.suma+1;
+            if self.suma==15:
+                Ganar(self)            
                         
         if pygame.sprite.collide_rect(self, ovni2):
             self.speed[1] = -self.speed[1]
             self.rect.centerx += -self.speed[0] * time
             ovni2.move(1000,1000)
+            self.suma=self.suma+1;
+            if self.suma==15:
+                Ganar(self) 
             
         if pygame.sprite.collide_rect(self, ovni3):
             self.speed[1] = -self.speed[1]
             self.rect.centerx += -self.speed[0] * time
             ovni3.move(1000,1000)
+            self.suma=self.suma+1;
+            if self.suma==15:
+                Ganar(self) 
 
         if pygame.sprite.collide_rect(self, ovni4):
             self.speed[1] = -self.speed[1]
             self.rect.centerx += -self.speed[0] * time
             ovni4.move(1000,1000)
+            self.suma=self.suma+1;
+            if self.suma==15:
+                Ganar(self) 
             
         if pygame.sprite.collide_rect(self, ovni5):
             self.speed[1] = -self.speed[1]
             self.rect.centerx += -self.speed[0] * time
             ovni5.move(1000,1000)
+            self.suma=self.suma+1;
+            if self.suma==15:
+                Ganar(self) 
             
         if pygame.sprite.collide_rect(self, ovni6):
             self.speed[1] = -self.speed[1]
             self.rect.centerx += -self.speed[0] * time
             ovni6.move(1000,1000)
+            self.suma=self.suma+1;
+            if self.suma==15:
+                Ganar(self) 
             
         if pygame.sprite.collide_rect(self, ovni7):
             self.speed[1] = -self.speed[1]
             self.rect.centerx += -self.speed[0] * time
             ovni7.move(1000,1000)
+            self.suma=self.suma+1;
+            if self.suma==15:
+                Ganar(self) 
             
         if pygame.sprite.collide_rect(self, ovni8):
             self.speed[1] = -self.speed[1]
             self.rect.centerx += -self.speed[0] * time
             ovni8.move(1000,1000)
+            self.suma=self.suma+1;
+            if self.suma==15:
+                Ganar(self) 
 
         if pygame.sprite.collide_rect(self, ovni9):
             self.speed[1] = -self.speed[1]
             self.rect.centerx += -self.speed[0] * time
             ovni9.move(1000,1000)
+            self.suma=self.suma+1;
+            if self.suma==15:
+                Ganar(self) 
             
         if pygame.sprite.collide_rect(self, ovni10):
             self.speed[1] = -self.speed[1]
             self.rect.centerx += -self.speed[0] * time
             ovni10.move(1000,1000)
+            self.suma=self.suma+1;
+            if self.suma==15:
+                Ganar(self) 
         
         if pygame.sprite.collide_rect(self, ovni11):
             self.speed[1] = -self.speed[1]
             self.rect.centerx += -self.speed[0] * time
             ovni11.move(1000,1000)
+            self.suma=self.suma+1;
+            if self.suma==15:
+                Ganar(self) 
             
         if pygame.sprite.collide_rect(self, ovni12):
             self.speed[1] = -self.speed[1]
             self.rect.centerx += -self.speed[0] * time
             ovni12.move(1000,1000)
+            self.suma=self.suma+1;
+            if self.suma==15:
+                Ganar(self) 
             
         if pygame.sprite.collide_rect(self, ovni13):
             self.speed[1] = -self.speed[1]
             self.rect.centerx += -self.speed[0] * time
             ovni13.move(1000,1000)
+            self.suma=self.suma+1;
+            if self.suma==15:
+                Ganar(self) 
 
         if pygame.sprite.collide_rect(self, ovni14):
             self.speed[1] = -self.speed[1]
             self.rect.centerx += -self.speed[0] * time
             ovni14.move(1000,1000)
+            self.suma=self.suma+1;
+            if self.suma==15:
+                Ganar(self) 
             
         if pygame.sprite.collide_rect(self, ovni15):
             self.speed[1] = -self.speed[1]
             self.rect.centerx += -self.speed[0] * time
             ovni15.move(1000,1000)
+            self.suma=self.suma+1;
+            if self.suma==15:
+                Ganar(self) 
         return punto
 def load_image(filename, transparent=False):  
     try:
@@ -231,6 +325,4 @@ def main():
  
 if __name__ == '__main__':
     pygame.init()
-    sonido = pygame.mixer.Sound("images/arcanoid.mp3")
-    sonido.play()
     main()

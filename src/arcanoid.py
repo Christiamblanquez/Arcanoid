@@ -28,6 +28,30 @@ def Ganar(self):
         pygame.display.flip()
     pygame.init()
     main()
+def Menu():
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    pygame.display.set_caption("Arcanoid")
+    pygame.display.set_icon(pygame.image.load('images/ball.png'))
+ 
+    background_image = load_image('images/start.png')
+    sonido = pygame.mixer.Sound("images/gameover.mp3")
+    sonido.play()
+
+    while True:
+        for eventos in pygame.event.get():
+            if eventos.type == QUIT:
+                sys.exit(0)
+ 
+        screen.blit(background_image, (0, 0))
+        p_jug, p_jug_rect = texto('Para jugar presiona enter', WIDTH/2, HEIGHT/1.1)
+        keys = pygame.key.get_pressed()
+        if keys[K_KP_ENTER]:
+            pygame.init()
+            main()
+        screen.blit(p_jug, p_jug_rect)
+        pygame.display.flip()
+    pygame.init()
+    main()
 def gameover(self):
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Arcanoid")
@@ -61,7 +85,7 @@ class Bola(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.centerx = WIDTH / 2
         self.rect.centery = HEIGHT / 1.2
-        self.speed = [0.3, -0.3]
+        self.speed = [0.4, -0.4]
         
     def actualizar(self,time, pala_jug, ovni1,ovni2,ovni3,ovni4,ovni5,ovni6,ovni7,ovni8,ovni9,ovni10,ovni11,ovni12,ovni13,ovni14,ovni15,punto):
         self.rect.centerx += self.speed[0] * time
@@ -328,4 +352,4 @@ def main():
  
 if __name__ == '__main__':
     pygame.init()
-    main()
+    Menu()
